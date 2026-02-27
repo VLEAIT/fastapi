@@ -3,3 +3,8 @@ GET - GET AN INFORMATION
 POST - CREATE SOMETHING NEW
 PUT -UPDATE
 DELETE- DELETE SOMETHING
+
+
+
+commmand to run server 
+uvicorn myapi:app --reload
