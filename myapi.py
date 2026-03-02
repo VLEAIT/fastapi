@@ -1,5 +1,6 @@
 from fastapi import FastAPI,Path
 from typing import Optional
+from pydantic import BaseModel
 
 app =FastAPI()
 
@@ -10,7 +11,11 @@ students = {
         "game":"chess"
     }
 }
-   
+
+class Student(BaseModel):
+    name :str
+    age : int
+    game : str
 
 @app.get("/")
 def index():
@@ -26,4 +31,12 @@ def get_studentsname(*,student_id:int =Path(description="students id and it valu
     for student_id in  students:
         if students[student_id]["name"]==name:
             return(students[student_id])
-    return{"name":"no valid"}        
+    return{"name":"no valid"}
+
+
+@app.post("/get_students/{student_id}")
+def get_students(student_id:int, student:Student):
+    if student_id in students:
+        return{"data":"exists"}
+    students[student_id] = student
+    return{students[student_id]}
