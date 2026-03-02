@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,Path
 
 app =FastAPI()
 
@@ -17,5 +17,12 @@ def index():
 
 
 @app.get("/get-hero/{student_id}")
-def get_herione(student_id: int):
+def get_herione(student_id: int = Path(description="ID number of hero ", gt=0,le=3)):
     return(students[student_id])
+
+@app.get("/get_herodata")
+def get_studentsname(name:str):
+    for student_id in  students:
+        if students[student_id]["name"]==name:
+            return(students[student_id])
+    return{"name":"no valid"}        
