@@ -11,9 +11,18 @@ app =FastAPI()
 
 @app.get("/super/{sup_hero}")
 async def super_her(sup_hero:Super_hero=Path(description="The name of superhero option")):
+    messages ={
+        Super_hero.superman :{"message":"the hero is is alien","power":"he can fly"},
+        Super_hero.batman :{"message":"thr hero is orfan ","power":"he is rich"},
+        Super_hero.catwomen:{"message":"the hero is thief","power":"she is flexible"}
+        }
+    
     if sup_hero is Super_hero.superman:
-        return{"sup_hero":sup_hero,"message":"the hero is here"}
-    if sup_hero.value =="batman":
-         return{"sup_hero":sup_hero,"message":"the hero is here"}
-       
-    return{"sup_hero":sup_hero,"message":"hero is not in trio"}
+        return{"super_hero":sup_hero , **messages[sup_hero]}
+    if sup_hero is Super_hero.batman:
+        return{"super_hero":sup_hero,**messages[sup_hero]}
+    if sup_hero is Super_hero.catwomen:
+        return{"super_hero":sup_hero,**messages[sup_hero]}
+    
+
+    
