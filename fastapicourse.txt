@@ -8,3 +8,7 @@ DELETE- DELETE SOMETHING
 
 commmand to run server 
 uvicorn myapi:app --reload
+
+
+
+
