@@ -1,7 +1,7 @@
 from fastapi import FastAPI,Path
 from enum import Enum
 
-class Super_hero(str,Enum):
+class Super_hero(str,Enum): #create options in drop down
     superman = "superman"
     batman ="batman"
     catwomen ="catwomen"
