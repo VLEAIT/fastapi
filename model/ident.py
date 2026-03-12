@@ -25,4 +25,12 @@ async def super_her(sup_hero:Super_hero=Path(description="The name of superhero 
         return{"super_hero":sup_hero,**messages[sup_hero]}
     
 
+@app.get("/hero")
+async def hero_name(*,name : str ,surname: str, power:str |None =None , dance : bool =False):
+    sakar ={"name":name,"surname":surname}
+    if power:
+        sakar.update({"power":power})
+
+    return sakar
+       
     
