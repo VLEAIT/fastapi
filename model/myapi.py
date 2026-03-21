@@ -22,6 +22,23 @@ class UpdateStudent(BaseModel):
     age : Optional[int] =None
     game:Optional[str] =None
 
+class gun(BaseModel):
+    name : str | None = None
+    caliber : str | None = None
+    price : float | None = None
+    model_config = {
+        "json_schema_extra": {
+            "message": [
+                {
+                    "name": "ak47",
+                    "caliber": "7.62mm",
+                    "price": 1500.0
+                }
+                
+            ]
+        }
+    }
+
 
 @app.get("/")
 def index():
@@ -69,3 +86,8 @@ def delete_student(student_id:int=Path(description="id of user to del")):
     
     del students[student_id]
     return("delted succesfully")
+
+@app.put("/gun")
+async def new_gun(Gun : gun ):
+    gun_data = Gun.model_dump()
+    return{"message":"gun added","gun":gun_data}    

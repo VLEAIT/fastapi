@@ -6,7 +6,7 @@ app = FastAPI()
 
 class dreambike(BaseModel):
     model_config ={"extra":"forbid"}
-    name: str = Field(description="tell your fav bike name")
+    name: str | None=  Field(description="tell your fav bike name")
     cc :int =Field(400,gt=150,le=500,description="tell your fave bike cc")
     price:float =Field(description="tell your fav bike price")
     bought :Literal["yes","No"] = "No"
@@ -21,3 +21,7 @@ async def bikes_name(bikes_s : dreambike):
 async def get_bikes(*,bikes_s : Annotated[dreambike, Query()],q :str):
     if bikes_s.name == "hunter":
         return bikes_s
+        
+@app.post("/index-weights/")
+async def create_index_weights(weights: dict[int, float]):
+    return weights

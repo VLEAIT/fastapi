@@ -1,11 +1,12 @@
-from fastapi import FastAPI,Query,Path
-from typing import Literal,Annoated
-from pydantic import BaseModel,Field
+from fastapi import FastAPI,Query,Path,Body
+from typing import Literal,Annotated
+from pydantic import BaseModel,Field,HttpUrl
 
 
 app = FastAPI()
 
 class npk(BaseModel):
+    url : HttpUrl
     plant : str = Field(description="tell plant name")
     nitrogen : int = Field(120,gt=80,le=200,description="tell nitrogen quantity")
     phosphorus : int = Field(80,gt=50,le=150,description="tell phosphorus quantity")
@@ -26,8 +27,10 @@ async def npk_kc(chem: npk):
 
 
 @app.put("/data/{data_id}")
-async def neps(*,data_id:Annoated[str ,Path(description="the name is",gt=1)], q:str | None=None,dat:datanpk):
+async def neps(*,data_id:Annotated[str ,Path(description="the name is")], q:str | None=None,dat:datanpk,importance:Annotated[str,Body()],id:dict[int,float]):
     item =dat.model_dump()
     if data_id:
         item.update({"data_id":data_id})
+    if importance:
+        item.update({"importance":importance})
     return item
