@@ -1,10 +1,12 @@
 from fastapi import FastAPI,Query
 from typing import Annotated,Literal
 from pydantic import BaseModel,Field
+from uuid import UUID
 
 app = FastAPI()
 
 class dreambike(BaseModel):
+    bike_id : UUID
     model_config ={"extra":"forbid"}
     name: str | None=  Field(description="tell your fav bike name")
     cc :int =Field(400,gt=150,le=500,description="tell your fave bike cc")
